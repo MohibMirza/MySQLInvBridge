@@ -3,6 +3,7 @@ package com.kingfrozo.pd.sql;
 import com.kingfrozo.pd.Main;
 import org.bukkit.entity.Player;
 
+import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,6 +29,29 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
             e.printStackTrace();
             System.out.println(1);
         }
+
+    }
+
+    public PlayerData getPlayer(Player player) {
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT * FROM playerdata" +
+                    "WHERE UUID=?");
+            ps.setString(1, player.getUniqueId().toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String db_name = rs.getString("NAME");
+                int money = rs.getInt("MONEY");
+                String title = rs.getString("TITLE");
+                String icon = rs.getString("icon");
+                return new PlayerData(player, db_name, title, icon, money);
+            } else {
+                System.out.println("Unable to retrieve player from db!");
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+            System.out.println("DB ERROR 123");
+        }
+        return null;
 
     }
 
@@ -145,13 +169,17 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
 
     }
 
-    public void setUsername(Player player) throws SQLException {
-        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
-                "  NAME=? WHERE UUID=?");
+    public void setUsername(Player player, String username) { // checked
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
+                    "  NAME=? WHERE UUID=?");
 
-        ps.setString(1, "NAME");
-        ps.setString(2, player.getUniqueId().toString());
-        ps.executeUpdate();
+            ps.setString(1, player.getUniqueId().toString());
+            ps.setString(2, username);
+            ps.executeUpdate();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getUsername(Player player) throws SQLException {

@@ -15,12 +15,16 @@ import java.sql.SQLException;
 
 public final class Main extends JavaPlugin implements Listener {
 
+    public static Main plugin;
+
     public MySQL SQL;
     public SQLGetter data;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+        plugin = this;
+
         this.SQL = new MySQL();
         this.data = new SQLGetter(this);
 
@@ -65,6 +69,10 @@ public final class Main extends JavaPlugin implements Listener {
         data.addMoney(player.getUniqueId(), 1);
         player.sendMessage("db updated!");
 
+    }
+
+    public static Main getPlugin() {
+        return plugin;
     }
 
 
