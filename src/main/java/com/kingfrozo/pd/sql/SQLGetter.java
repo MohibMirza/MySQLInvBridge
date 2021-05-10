@@ -43,7 +43,7 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
                 int money = rs.getInt("MONEY");
                 String title = rs.getString("TITLE");
                 String icon = rs.getString("ICON");
-                return new PlayerData(player, db_name, title, icon, money);
+                return (new PlayerData(player, db_name, title, icon, money));
             }else{
                 createPlayer(player);
                 player.sendMessage("new player being created!");

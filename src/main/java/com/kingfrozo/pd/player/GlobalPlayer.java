@@ -19,8 +19,6 @@ public class GlobalPlayer {
         playerData = plugin.data.getPlayer(player);
 
         plugin.players.put(uuid, this); // Automatically adds the reference upon instantiation
-
-        System.out.println(playerData.toString());
     }
 
     public String toString() {
