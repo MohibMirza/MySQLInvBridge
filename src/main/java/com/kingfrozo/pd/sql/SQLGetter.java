@@ -64,11 +64,11 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
         return false;
     }
 
-    public void addPoints(UUID uuid, int points) {
+    public void addMoney(UUID uuid, int points) {
         try {
             PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
-                    " POINTS=? WHERE UUID=?");
-            ps.setInt(1, getPoints(uuid) + 1);
+                    " MONEY=? WHERE UUID=?");
+            ps.setInt(1, getMoney(uuid) + 1);
             ps.setString(2, uuid.toString());
             ps.executeUpdate();
         }catch(Exception e) {
@@ -77,15 +77,15 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
         }
     }
 
-    public int getPoints(UUID uuid) {
+    public int getMoney(UUID uuid) {
         try {
-            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT POINTS FROM playerdata" +
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT MONEY FROM playerdata" +
                     " WHERE UUID=?");
             ps.setString(1, uuid.toString());
             ResultSet rs = ps.executeQuery();
             int points = 0;
             if(rs.next()){
-                    points = rs.getInt("POINTS");
+                    points = rs.getInt("MONEY");
                     return points;
             }
         }catch(SQLException e) {
@@ -94,6 +94,79 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
         }
         return 0;
     }
+
+    public void setTitle(Player player, String title) throws SQLException {
+        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
+                " TITLE=? WHERE UUID=?");
+        ps.setString(1, title);
+        ps.setString(2, player.getUniqueId().toString());
+
+        ps.executeUpdate();
+    }
+
+    public String getTitle(Player player) throws SQLException {
+        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT TITLE FROM playerdata" +
+                " WHERE UUID=?");
+        ps.setString(1, player.getUniqueId().toString());
+        ResultSet rs = ps.executeQuery();
+        String title = "";
+        if(rs.next()) {
+            title = rs.getString("TITLE");
+            return title;
+        }
+
+        return "error";
+
+    }
+
+    public void setIcon(Player player, String icon) throws SQLException {
+        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
+                " ICON=? WHERE UUID=?");
+        ps.setString(1, icon);
+        ps.setString(2, player.getUniqueId().toString());
+
+        ps.executeUpdate();
+    }
+
+    public String getIcon(Player player) throws SQLException {
+        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT ICON FROM playerdata" +
+                " WHERE UUID=?");
+        ps.setString(1, player.getUniqueId().toString());
+        ResultSet rs = ps.executeQuery();
+        String icon = "";
+        if(rs.next()) {
+            icon = rs.getString("ICON");
+            return icon;
+        }else {
+            System.out.println("Finding icon for unknown player: " + player.getName());
+        }
+
+        return "error";
+
+    }
+
+    public void setUsername(Player player) throws SQLException {
+        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
+                "  NAME=? WHERE UUID=?");
+
+        ps.setString(1, "NAME");
+        ps.setString(2, player.getUniqueId().toString());
+        ps.executeUpdate();
+    }
+
+    public String getUsername(Player player) throws SQLException {
+        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT NAME FROM playerdata" +
+                " WHERE UUID=?");
+
+        ps.setString(1, player.getUniqueId().toString());
+        ResultSet rs = ps.executeQuery();
+
+        if(rs.next()) {
+            return rs.getString("NAME");
+        }
+        return "error";
+    }
+
 
 
 }

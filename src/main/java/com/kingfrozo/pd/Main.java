@@ -62,7 +62,7 @@ public final class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void onMobKill(PlayerInteractEvent event){
         Player player = event.getPlayer();
-        data.addPoints(player.getUniqueId(), 1);
+        data.addMoney(player.getUniqueId(), 1);
         player.sendMessage("db updated!");
 
     }
