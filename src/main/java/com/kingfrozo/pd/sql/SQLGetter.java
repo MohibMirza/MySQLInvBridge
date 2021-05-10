@@ -35,17 +35,20 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
     public PlayerData getPlayer(Player player) {
         try {
             PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT * FROM playerdata" +
-                    "WHERE UUID=?");
+                    " WHERE UUID=?");
             ps.setString(1, player.getUniqueId().toString());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String db_name = rs.getString("NAME");
                 int money = rs.getInt("MONEY");
                 String title = rs.getString("TITLE");
-                String icon = rs.getString("icon");
+                String icon = rs.getString("ICON");
                 return new PlayerData(player, db_name, title, icon, money);
-            } else {
-                System.out.println("Unable to retrieve player from db!");
+            }else{
+                createPlayer(player);
+                player.sendMessage("new player being created!");
+                return new PlayerData(player, player.getName(), "player", "player", 0); // NOTICE: HARD-CODED VALUES MAY BE CHANGED IN FUTURE
+
             }
         }catch(SQLException e) {
             e.printStackTrace();
@@ -58,16 +61,13 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
     public void createPlayer(Player player) {
         try {
             UUID uuid = player.getUniqueId();
-            if(!exists(uuid)){
-                PreparedStatement ps2 = plugin.SQL.getConnection().prepareStatement("INSERT INTO playerdata" +
-                        " (NAME,UUID) VALUES (?,?)");
-                System.out.println(ps2.toString());
-                ps2.setString(1, player.getName());
-                ps2.setString(2, uuid.toString());
-                ps2.executeUpdate();
+            PreparedStatement ps2 = plugin.SQL.getConnection().prepareStatement("INSERT INTO playerdata" +
+                    " (NAME,UUID) VALUES (?,?)");
+            ps2.setString(1, player.getName());
+            ps2.setString(2, uuid.toString());
+            ps2.executeUpdate();
 
-                return;
-            }
+            return;
         }catch(SQLException e) {
             e.printStackTrace();
             System.out.println(2);
@@ -119,50 +119,66 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
         return 0;
     }
 
-    public void setTitle(Player player, String title) throws SQLException {
-        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
-                " TITLE=? WHERE UUID=?");
-        ps.setString(1, title);
-        ps.setString(2, player.getUniqueId().toString());
+    public void setTitle(Player player, String title) {
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
+                    " TITLE=? WHERE UUID=?");
+            ps.setString(1, title);
+            ps.setString(2, player.getUniqueId().toString());
 
-        ps.executeUpdate();
+            ps.executeUpdate();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getTitle(Player player) throws SQLException {
-        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT TITLE FROM playerdata" +
-                " WHERE UUID=?");
-        ps.setString(1, player.getUniqueId().toString());
-        ResultSet rs = ps.executeQuery();
-        String title = "";
-        if(rs.next()) {
-            title = rs.getString("TITLE");
-            return title;
+    public String getTitle(Player player) {
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT TITLE FROM playerdata" +
+                    " WHERE UUID=?");
+            ps.setString(1, player.getUniqueId().toString());
+            ResultSet rs = ps.executeQuery();
+            String title = "";
+            if (rs.next()) {
+                title = rs.getString("TITLE");
+                return title;
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
         }
 
         return "error";
 
     }
 
-    public void setIcon(Player player, String icon) throws SQLException {
-        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
-                " ICON=? WHERE UUID=?");
-        ps.setString(1, icon);
-        ps.setString(2, player.getUniqueId().toString());
+    public void setIcon(Player player, String icon) {
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
+                    " ICON=? WHERE UUID=?");
+            ps.setString(1, icon);
+            ps.setString(2, player.getUniqueId().toString());
 
-        ps.executeUpdate();
+            ps.executeUpdate();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getIcon(Player player) throws SQLException {
-        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT ICON FROM playerdata" +
-                " WHERE UUID=?");
-        ps.setString(1, player.getUniqueId().toString());
-        ResultSet rs = ps.executeQuery();
-        String icon = "";
-        if(rs.next()) {
-            icon = rs.getString("ICON");
-            return icon;
-        }else {
-            System.out.println("Finding icon for unknown player: " + player.getName());
+    public String getIcon(Player player) {
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT ICON FROM playerdata" +
+                    " WHERE UUID=?");
+            ps.setString(1, player.getUniqueId().toString());
+            ResultSet rs = ps.executeQuery();
+            String icon = "";
+            if (rs.next()) {
+                icon = rs.getString("ICON");
+                return icon;
+            } else {
+                System.out.println("Finding icon for unknown player: " + player.getName());
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
         }
 
         return "error";
@@ -174,23 +190,28 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
             PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
                     "  NAME=? WHERE UUID=?");
 
-            ps.setString(1, player.getUniqueId().toString());
-            ps.setString(2, username);
+            ps.setString(1, username);
+            ps.setString(2, player.getUniqueId().toString());
             ps.executeUpdate();
         }catch(SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public String getUsername(Player player) throws SQLException {
-        PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT NAME FROM playerdata" +
-                " WHERE UUID=?");
+    public String getUsername(Player player) {
 
-        ps.setString(1, player.getUniqueId().toString());
-        ResultSet rs = ps.executeQuery();
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT NAME FROM playerdata" +
+                    " WHERE UUID=?");
 
-        if(rs.next()) {
-            return rs.getString("NAME");
+            ps.setString(1, player.getUniqueId().toString());
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("NAME");
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
         }
         return "error";
     }

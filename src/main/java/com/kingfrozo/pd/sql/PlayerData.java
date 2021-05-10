@@ -20,7 +20,7 @@ public class PlayerData {
         this.icon = icon;
         this.money = money;
 
-        if(player.getName() != this.db_name) {
+        if(!player.getName().equalsIgnoreCase(this.db_name)) {
             Main.plugin.data.setUsername(player, player.getName());
             db_name = player.getName();
             System.out.println(player.getName() + " has changed their username! Updating the db!");
@@ -68,11 +68,11 @@ public class PlayerData {
     }
 
     public String toString() {
-        String output = "";
-        output.concat("Player Name: " + db_name);
-        output.concat("    title: " + title);
-        output.concat("    icon: " + icon);
-        output.concat("    money: " + money + "\n");
+        String output = "\n";
+        output += ("Player Name: " + db_name + "\n" );
+        output += ("    title: " + title + "\n");
+        output += ("    icon: " + icon + "\n");
+        output += ("    money: " + money + "\n");
 
         return output;
     }

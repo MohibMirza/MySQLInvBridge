@@ -1,17 +1,20 @@
 package com.kingfrozo.pd;
 
+import com.kingfrozo.pd.events.JoinLeaveSync;
+import com.kingfrozo.pd.player.GlobalPlayer;
 import com.kingfrozo.pd.sql.MySQL;
 import com.kingfrozo.pd.sql.SQLGetter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class Main extends JavaPlugin implements Listener {
 
@@ -19,6 +22,8 @@ public final class Main extends JavaPlugin implements Listener {
 
     public MySQL SQL;
     public SQLGetter data;
+
+    public Map<UUID, GlobalPlayer> players;
 
     @Override
     public void onEnable() {
@@ -31,7 +36,7 @@ public final class Main extends JavaPlugin implements Listener {
         try {
             this.SQL.connect();
             data.createTable();
-            this.getServer().getPluginManager().registerEvents(this, this);
+            this.getServer().getPluginManager().registerEvents(new JoinLeaveSync(), this);
         } catch (ClassNotFoundException | SQLException e) {
             // Login info is incorrect
             // they are not using a database
@@ -42,6 +47,9 @@ public final class Main extends JavaPlugin implements Listener {
         if(SQL.isConnected()) {
             Bukkit.getLogger().info("Database is connected!");
         }
+
+        players = new HashMap<java.util.UUID, GlobalPlayer>();
+
         System.out.println("a");
         System.out.println("a");
         System.out.println("a");
@@ -57,17 +65,10 @@ public final class Main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    public void testerEvent(PlayerInteractEvent event){
         Player player = event.getPlayer();
-        data.createPlayer(player);
+        // PlayerData playerData = data.getPlayer(player);
 
-    }
-
-    @EventHandler
-    public void onMobKill(PlayerInteractEvent event){
-        Player player = event.getPlayer();
-        data.addMoney(player.getUniqueId(), 1);
-        player.sendMessage("db updated!");
 
     }
 
