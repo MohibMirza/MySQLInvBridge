@@ -18,7 +18,9 @@ public class GlobalPlayer {
         Player player = Bukkit.getPlayer(uuid);
         playerData = plugin.data.getPlayer(player);
 
+        System.out.println("PLAYERS x: " + plugin.players.size());
         plugin.players.put(uuid, this); // Automatically adds the reference upon instantiation
+        System.out.println("PLAYERS x: " + plugin.players.size());
     }
 
     public String toString() {

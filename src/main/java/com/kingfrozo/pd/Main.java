@@ -5,10 +5,12 @@ import com.kingfrozo.pd.player.GlobalPlayer;
 import com.kingfrozo.pd.sql.MySQL;
 import com.kingfrozo.pd.sql.SQLGetter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
@@ -36,6 +38,7 @@ public final class Main extends JavaPlugin implements Listener {
         try {
             this.SQL.connect();
             data.createTable();
+            this.getServer().getPluginManager().registerEvents(this, this);
             this.getServer().getPluginManager().registerEvents(new JoinLeaveSync(), this);
         } catch (ClassNotFoundException | SQLException e) {
             // Login info is incorrect
@@ -67,8 +70,15 @@ public final class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void testerEvent(PlayerInteractEvent event){
         Player player = event.getPlayer();
-        // PlayerData playerData = data.getPlayer(player);
+        ItemStack item = player.getInventory().getItemInMainHand();
 
+        if(item == null) return;
+        if(!item.getItemMeta().hasCustomModelData()) return;
+        // player.sendMessage(item.getData().toString());
+
+        Entity entity = player;
+
+        entity.getMetadata("itemsadder.");
 
     }
 

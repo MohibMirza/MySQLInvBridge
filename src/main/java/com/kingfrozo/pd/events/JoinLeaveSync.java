@@ -16,20 +16,21 @@ public class JoinLeaveSync implements Listener {
     MySQL SQL = Main.getPlugin().SQL;
     SQLGetter data = Main.getPlugin().data;
 
-    // TODO: JOIN/LEAVE DATA SYNC
-    // TODO: ENSURE JOIN/LEAVE DATA SYNC WORKS
+    // TODO: MAKE SURE JOIN/LEAVE DATA SYNC IS ASYNC
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         new GlobalPlayer(player.getUniqueId());
-        player.sendMessage("PLAYERS: " + plugin.players.size());
+        player.sendMessage("PLAYERS onJoin: " + plugin.players.size());
         player.sendMessage(plugin.players.get(player.getUniqueId()).toString() + "");
+        System.out.println("PLAYERS onJoin: " + plugin.players.size());
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        System.out.println(plugin.players.get(player.getUniqueId()).toString());
         plugin.players.remove(player.getUniqueId());
         System.out.println(plugin.players.size());
     }

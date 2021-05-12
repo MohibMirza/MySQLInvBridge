@@ -1,0 +1,20 @@
+playerdata:
+
+    uuid
+    username
+    gems
+    inventory
+    title
+    icon
+
+    uuid: never change // no need for thread-safe
+
+    username: change when username doesnt match upon login // thread-safe
+
+    gems: change whenever some are deposited to bank // thread-safe
+
+    inventory: login and logout of LOBBY ONLY
+
+    title: login and logout of LOBBY ONLY //
+
+    icon: login and logout of LOBBY ONLY //
