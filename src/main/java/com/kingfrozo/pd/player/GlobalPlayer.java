@@ -9,6 +9,10 @@ import java.util.UUID;
 
 public class GlobalPlayer {
 
+    // TODO: LUCKPERMS SET PREFIX/ICON UNLESS BUNGEECHAT WILL BE USED (LOOK INTO BUNGEECHAT)
+    // TODO: ADD INVENTORY TO MYSQL DB
+    // TODO:
+
     public static Main plugin = Main.getPlugin();
 
     private PlayerData playerData;
@@ -18,9 +22,9 @@ public class GlobalPlayer {
         Player player = Bukkit.getPlayer(uuid);
         playerData = plugin.data.getPlayer(player);
 
-        System.out.println("PLAYERS x: " + plugin.players.size());
         plugin.players.put(uuid, this); // Automatically adds the reference upon instantiation
-        System.out.println("PLAYERS x: " + plugin.players.size());
+        System.out.println("Global Player created: " + player.getName());
+        System.out.println("    PlayerData Async warning: " + (playerData == null));
     }
 
     public String toString() {
