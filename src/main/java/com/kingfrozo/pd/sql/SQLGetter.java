@@ -11,6 +11,8 @@ import java.util.UUID;
 
 public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!!
 
+    // TODO: CLOSE CONNECTIONS + ASYNC
+
     private Main plugin;
 
     public SQLGetter(Main plugin) {

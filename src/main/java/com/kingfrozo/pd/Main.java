@@ -4,7 +4,9 @@ import com.kingfrozo.pd.events.JoinLeaveSync;
 import com.kingfrozo.pd.player.GlobalPlayer;
 import com.kingfrozo.pd.sql.MySQL;
 import com.kingfrozo.pd.sql.SQLGetter;
+import dev.lone.itemsadder.api.ItemsAdder;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -71,14 +73,16 @@ public final class Main extends JavaPlugin implements Listener {
     public void testerEvent(PlayerInteractEvent event){
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
-
+        if(item.getType() == Material.AIR) return;
         if(item == null) return;
-        if(!item.getItemMeta().hasCustomModelData()) return;
+        // if(!item.getItemMeta().hasCustomModelData()) return;
         // player.sendMessage(item.getData().toString());
 
         Entity entity = player;
 
-        entity.getMetadata("itemsadder.");
+        // player.getInventory().setItemInMainHand(ItemsAdder.getCustomItem("animecraft:betahat"));
+        System.out.println(ItemsAdder.getCustomItemName(item));
+        System.out.println("test");
 
     }
 
