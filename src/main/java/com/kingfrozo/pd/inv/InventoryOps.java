@@ -42,6 +42,7 @@ public class InventoryOps {
     }
 
     public static void setInventory(Player player, String s) {
+        if(s=="") return;
         int beginIndex = 0;
         for(int i = 0; i < INV_SIZE; i++) {
             int endIndex = s.indexOf(',', beginIndex);
@@ -49,5 +50,6 @@ public class InventoryOps {
             beginIndex = endIndex+1;
             player.getInventory().setItem(i, ItemsAdder.getCustomItem(itemName));
         }
+        player.sendMessage("Inventory synced!");
     }
 }

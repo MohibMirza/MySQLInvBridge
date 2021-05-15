@@ -1,14 +1,15 @@
 package com.kingfrozo.pd.sql;
 
 import com.kingfrozo.pd.Main;
+import com.kingfrozo.pd.inv.InventoryOps;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.sql.SQLException;
 
 public class PlayerData {
 
-    // TODO: ADD ALL SYNC METHODS IN HERE (CALL SQL FUNCS)
-    // TODO:
+    // TODO: ADD ALL SYNC METHODS IN HERE (CALL SQL FUNCS) (TITLE / ICON SYNC)
 
     public static Main plugin = Main.getPlugin();
 
@@ -29,6 +30,9 @@ public class PlayerData {
             db_name = player.getName();
             System.out.println(player.getName() + " has changed their username! Updating the db!");
         }
+
+        syncInventory();
+
     }
 
     public Player getPlayer() {
@@ -77,6 +81,15 @@ public class PlayerData {
 
     public void setString(String inv){
         this.inv = inv;
+    }
+
+    public void syncInventory() {
+        Inventory playerInv = player.getInventory();
+        playerInv.clear();
+
+        InventoryOps.setInventory(player, this.inv);
+
+
     }
 
     public String toString() {
