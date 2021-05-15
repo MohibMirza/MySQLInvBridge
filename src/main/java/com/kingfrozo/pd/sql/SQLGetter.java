@@ -25,7 +25,8 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
         try {
             ps = plugin.SQL.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS playerdata"
                 + "(NAME VARCHAR(16) NOT NULL,UUID VARCHAR(36) NOT NULL,MONEY INT(15) DEFAULT 0 NOT NULL," +
-                    "TITLE VARCHAR(25) DEFAULT 'player' NOT NULL,ICON VARCHAR(25) DEFAULT 'player' NOT NULL,PRIMARY KEY (UUID))");
+                    "TITLE VARCHAR(25) DEFAULT 'player' NOT NULL,ICON VARCHAR(25) DEFAULT 'player' NOT NULL," +
+                    "INV VARCHAR(1200) DEFAULT '' NOT NULL,PRIMARY KEY (UUID))");
             ps.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
@@ -45,11 +46,12 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
                 int money = rs.getInt("MONEY");
                 String title = rs.getString("TITLE");
                 String icon = rs.getString("ICON");
-                return (new PlayerData(player, db_name, title, icon, money));
+                String inv = rs.getString("INV");
+                return (new PlayerData(player, db_name, title, icon, money, inv));
             }else{
                 createPlayer(player);
                 player.sendMessage("new player being created!");
-                return new PlayerData(player, player.getName(), "player", "player", 0); // NOTICE: HARD-CODED VALUES MAY BE CHANGED IN FUTURE
+                return new PlayerData(player, player.getName(), "player", "player", 0, ""); // NOTICE: HARD-CODED VALUES MAY BE CHANGED IN FUTURE
 
             }
         }catch(SQLException e) {
@@ -216,6 +218,37 @@ public class SQLGetter { // !!! CLOSE ALL PS & RS & ULTIMATELY THE CONNECTION !!
             e.printStackTrace();
         }
         return "error";
+    }
+
+    public String getInventory(Player player) {
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("SELECT INV FROM playerdata" +
+                    " WHERE UUID=?");
+
+            ps.setString(1, player.getUniqueId().toString());
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                return rs.getString("INV");
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return "error";
+
+    }
+
+    public void setInventory(Player player, String strInv) {
+        try {
+            PreparedStatement ps = plugin.SQL.getConnection().prepareStatement("UPDATE playerdata SET" +
+                    " INV=? WHERE UUID=?");
+            ps.setString(1, strInv);
+            ps.setString(2, player.getUniqueId().toString());
+
+            ps.executeUpdate();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

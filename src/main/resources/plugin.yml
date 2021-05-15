@@ -2,5 +2,5 @@ name: Pd
 version: ${project.version}
 main: com.kingfrozo.pd.Main
 api-version: 1.16
-depend: [itemsadder]
+depend: [ ItemsAdder ]
 authors: [KingFrozo]

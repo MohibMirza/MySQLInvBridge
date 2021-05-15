@@ -11,6 +11,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -71,18 +75,7 @@ public final class Main extends JavaPlugin implements Listener {
 
     @EventHandler
     public void testerEvent(PlayerInteractEvent event){
-        Player player = event.getPlayer();
-        ItemStack item = player.getInventory().getItemInMainHand();
-        if(item.getType() == Material.AIR) return;
-        if(item == null) return;
-        // if(!item.getItemMeta().hasCustomModelData()) return;
-        // player.sendMessage(item.getData().toString());
-
-        Entity entity = player;
-
-        // player.getInventory().setItemInMainHand(ItemsAdder.getCustomItem("animecraft:betahat"));
-        System.out.println(ItemsAdder.getCustomItemName(item));
-        System.out.println("test");
+        JoinLeaveSync.syncInventory(event.getPlayer());
 
     }
 

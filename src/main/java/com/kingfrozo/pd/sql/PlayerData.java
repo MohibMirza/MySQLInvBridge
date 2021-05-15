@@ -7,18 +7,22 @@ import java.sql.SQLException;
 
 public class PlayerData {
 
+    // TODO: ADD ALL SYNC METHODS IN HERE (CALL SQL FUNCS)
+    // TODO:
+
     public static Main plugin = Main.getPlugin();
 
     private Player player;
-    private String db_name, title, icon;
+    private String db_name, title, icon, inv;
     private int money;
 
-    public PlayerData(Player player, String db_name, String title, String icon, int money) throws SQLException {
+    public PlayerData(Player player, String db_name, String title, String icon, int money, String inv) throws SQLException {
         this.player = player;
         this.db_name = db_name;
         this.title = title;
         this.icon = icon;
         this.money = money;
+        this.inv = inv;
 
         if(!player.getName().equalsIgnoreCase(this.db_name)) {
             Main.plugin.data.setUsername(player, player.getName());
@@ -65,6 +69,14 @@ public class PlayerData {
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public String getInv() {
+        return inv;
+    }
+
+    public void setString(String inv){
+        this.inv = inv;
     }
 
     public String toString() {
