@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class PlayerData {
 
-    // TODO: ADD ALL SYNC METHODS IN HERE (CALL SQL FUNCS) (TITLE / ICON SYNC)
+    // TODO: ADD ALL SYNC METHODS IN HERE (CALL SQL FUNCS)
 
     public static Main plugin = Main.getPlugin();
 
@@ -30,8 +30,6 @@ public class PlayerData {
             db_name = player.getName();
             System.out.println(player.getName() + " has changed their username! Updating the db!");
         }
-
-        syncInventory();
 
     }
 

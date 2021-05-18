@@ -23,7 +23,7 @@ public class JoinLeaveSync implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        (new GlobalPlayer(player.getUniqueId())).join();
+        new GlobalPlayer(player.getUniqueId());
 
     }
 

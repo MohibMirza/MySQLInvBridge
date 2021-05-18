@@ -2,6 +2,7 @@ package com.kingfrozo.pd.player;
 
 import com.kingfrozo.pd.Main;
 import com.kingfrozo.pd.inv.InventoryOps;
+import com.kingfrozo.pd.sql.AsyncSQL;
 import com.kingfrozo.pd.sql.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,10 +20,9 @@ public class GlobalPlayer {
     private PlayerData playerData;
 
     public GlobalPlayer(UUID uuid) {
+        System.out.println("Generating global player");
         Player player = Bukkit.getPlayer(uuid);
-        playerData = plugin.data.getPlayer(player); // replace this with async getPlayer
-
-        plugin.players.put(uuid, this); // Automatically adds the reference upon instantiation
+        AsyncSQL.initPlayer(player, this, () -> playerData.syncInventory());
         System.out.println("Global Player created: " + player.getName());
         System.out.println("    PlayerData Async warning: " + (playerData == null));
     }
@@ -43,6 +43,14 @@ public class GlobalPlayer {
         System.out.println(strInv);
         plugin.data.setInventory(player, strInv);
 
+    }
+
+    public PlayerData getPlayerData() {
+        return playerData;
+    }
+
+    public void setPlayerData(PlayerData playerData) {
+        this.playerData = playerData;
     }
 
     public String toString() {
