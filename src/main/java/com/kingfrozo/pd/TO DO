@@ -1,0 +1,67 @@
+playerdata:
+
+    uuid
+    username
+    gems
+    inventory
+    title
+    icon
+
+    uuid: never change // no need for thread-safe
+
+    username: change when username doesnt match upon login // thread-safe
+
+    gems: change whenever some are deposited to bank // thread-safe
+
+    inventory: login and logout of LOBBY ONLY
+
+    title: login and logout of LOBBY ONLY //
+
+    icon: login and logout of LOBBY ONLY //
+
+
+Plugins:
+
+    MySQLInvSync - Syncs inventories, titles, icons, and change of usernames into mySQL database (ALL SERVERS)
+
+    MySQLSocialSync - Friends, Parties,
+
+    Crates - Crate opening functionality
+
+Check:
+    - Username change updater
+
+Known Bugs:
+    - Connection disconnects when laptop is closed
+    - Fill starting inv slot with commas
+    -
+
+PRIORITY: 1 // 2 // 3 // 4
+
+MineClub:
+    - Party System (MySQL) 4
+    - Friend system (MySQL) 4
+    - Minigame Queuing System 2
+    - Minigame Selector (Packets) 3
+    - Auction house (MySQL) 2
+    - Bank (MySQL) 2
+    - Money/Giveaway HUD (ItemsAdder add-on) 2
+    -
+
+Minigame SQL Table:
+
+    Minigame Type:
+        - Gravity
+        - Spleef
+        - etc
+
+    QueueTime: Time of when the lobby last scanned for queue
+
+    State: True/False depending if game is active
+
+5/16/21: Make SQL Async + Make Gravity Queue system and game timer
+
+
+
+
+

@@ -30,7 +30,6 @@ public final class Main extends JavaPlugin implements Listener {
 
     public MySQL SQL;
     public SQLGetter data;
-
     public Map<UUID, GlobalPlayer> players;
 
     @Override
