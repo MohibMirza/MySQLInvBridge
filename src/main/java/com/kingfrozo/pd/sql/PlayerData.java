@@ -86,8 +86,6 @@ public class PlayerData {
         playerInv.clear();
 
         InventoryOps.setInventory(player, this.inv);
-
-
     }
 
     public String toString() {

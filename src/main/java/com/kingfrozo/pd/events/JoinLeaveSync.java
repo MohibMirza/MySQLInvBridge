@@ -1,6 +1,7 @@
 package com.kingfrozo.pd.events;
 
 import com.kingfrozo.pd.Main;
+import com.kingfrozo.pd.events.custom.PlayerSuccessfullyJoinedEvent;
 import com.kingfrozo.pd.inv.InventoryOps;
 import com.kingfrozo.pd.player.GlobalPlayer;
 import com.kingfrozo.pd.sql.MySQL;
@@ -37,19 +38,12 @@ public class JoinLeaveSync implements Listener {
         System.out.println(plugin.players.size());
     }
 
-    public static void sync(Player player) {
-
-    }
-
     public static void syncInventory(Player player, Inventory inv) { }
 
     public static void syncInventory(Player player) {
         Inventory inv = player.getInventory();
 
         String invStr = InventoryOps.serialize(inv);
-
-
-
 
     }
 

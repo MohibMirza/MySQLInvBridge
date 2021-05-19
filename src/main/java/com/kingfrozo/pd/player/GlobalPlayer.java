@@ -1,8 +1,9 @@
 package com.kingfrozo.pd.player;
 
 import com.kingfrozo.pd.Main;
+import com.kingfrozo.pd.events.custom.PlayerSuccessfullyJoinedEvent;
 import com.kingfrozo.pd.inv.InventoryOps;
-import com.kingfrozo.pd.sql.AsyncSQL;
+import com.kingfrozo.pd.sql.Async;
 import com.kingfrozo.pd.sql.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -19,10 +20,20 @@ public class GlobalPlayer {
 
     private PlayerData playerData;
 
+    private boolean isLoaded;
+
     public GlobalPlayer(UUID uuid) {
         System.out.println("Generating global player");
         Player player = Bukkit.getPlayer(uuid);
-        AsyncSQL.initPlayer(player, this, () -> playerData.syncInventory());
+
+        Async.initPlayer(player, this, () -> {
+            // callback
+            playerData.syncInventory();
+            player.sendMessage("Inventory Synced!!!");
+            PlayerSuccessfullyJoinedEvent event = new PlayerSuccessfullyJoinedEvent(player);
+            Bukkit.getPluginManager().callEvent(event);
+        });
+
         System.out.println("Global Player created: " + player.getName());
         System.out.println("    PlayerData Async warning: " + (playerData == null));
     }
@@ -32,8 +43,6 @@ public class GlobalPlayer {
         player.sendMessage("PLAYERS onJoin: " + plugin.players.size());
         player.sendMessage(plugin.players.get(player.getUniqueId()).toString() + "");
         System.out.println("PLAYERS onJoin: " + plugin.players.size());
-
-
     }
 
     public void leave() {
@@ -51,6 +60,15 @@ public class GlobalPlayer {
 
     public void setPlayerData(PlayerData playerData) {
         this.playerData = playerData;
+        isLoaded = true;
+    }
+
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        isLoaded = loaded;
     }
 
     public String toString() {
