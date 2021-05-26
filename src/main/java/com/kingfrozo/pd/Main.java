@@ -18,6 +18,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mineacademy.chatcontrol.ChatControl;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -57,12 +58,6 @@ public final class Main extends JavaPlugin implements Listener {
         }
 
         players = new HashMap<java.util.UUID, GlobalPlayer>();
-
-        System.out.println("a");
-        System.out.println("a");
-        System.out.println("a");
-        System.out.println("a");
-
     }
 
     @Override

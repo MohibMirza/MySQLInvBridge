@@ -60,6 +60,7 @@ Minigame SQL Table:
     State: True/False depending if game is active
 
 5/16/21: Make SQL Async + Make Gravity Queue system and game timer
+5/18/21: Make Gravity QUeue System and game timer +
 
 
 

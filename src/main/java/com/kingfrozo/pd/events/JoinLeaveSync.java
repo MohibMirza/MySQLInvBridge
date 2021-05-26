@@ -19,7 +19,8 @@ public class JoinLeaveSync implements Listener {
     MySQL SQL = Main.getPlugin().SQL;
     SQLGetter data = Main.getPlugin().data;
 
-    // TODO: MAKE SURE JOIN/LEAVE DATA SYNC IS ASYNC
+    // TODO: MAKE SURE JOIN/LEAVE DATA SYNC IS ASYNC (DONE!)
+    // TODO:
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
