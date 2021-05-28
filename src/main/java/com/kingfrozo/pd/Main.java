@@ -2,6 +2,7 @@ package com.kingfrozo.pd;
 
 import com.kingfrozo.pd.events.JoinLeaveSync;
 import com.kingfrozo.pd.player.GlobalPlayer;
+import com.kingfrozo.pd.player.Title;
 import com.kingfrozo.pd.sql.MySQL;
 import com.kingfrozo.pd.sql.SQLGetter;
 import dev.lone.itemsadder.api.ItemsAdder;
@@ -41,6 +42,8 @@ public final class Main extends JavaPlugin implements Listener {
         this.SQL = new MySQL();
         this.data = new SQLGetter(this);
 
+        saveDefaultConfig();
+
         try {
             this.SQL.connect();
             data.createTable();
@@ -56,6 +59,10 @@ public final class Main extends JavaPlugin implements Listener {
         if(SQL.isConnected()) {
             Bukkit.getLogger().info("Database is connected!");
         }
+
+        Title.readTitles();
+
+        System.out.println("TitleCount: " + Title.titles.size());
 
         players = new HashMap<java.util.UUID, GlobalPlayer>();
     }
