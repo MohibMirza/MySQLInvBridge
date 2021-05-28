@@ -66,12 +66,12 @@ public final class Main extends JavaPlugin implements Listener {
 
         SQL.disconnect();
     }
-
+/*
     @EventHandler
     public void testerEvent(PlayerInteractEvent event){
         JoinLeaveSync.syncInventory(event.getPlayer());
 
-    }
+    }*/
 
     public static Main getPlugin() {
         return plugin;
