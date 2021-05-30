@@ -3,6 +3,7 @@ package com.kingfrozo.pd.player;
 import com.kingfrozo.pd.Main;
 import com.kingfrozo.pd.events.custom.PlayerSuccessfullyJoinedEvent;
 import com.kingfrozo.pd.inv.InventoryOps;
+import com.kingfrozo.pd.libs.LP;
 import com.kingfrozo.pd.sql.Async;
 import com.kingfrozo.pd.sql.PlayerData;
 import org.bukkit.Bukkit;
@@ -29,9 +30,10 @@ public class GlobalPlayer {
         Async.initPlayer(player, this, () -> {
             // callback
             playerData.syncInventory();
-            player.sendMessage("Inventory Synced!!!");
             PlayerSuccessfullyJoinedEvent event = new PlayerSuccessfullyJoinedEvent(player);
             Bukkit.getPluginManager().callEvent(event);
+
+
         });
 
         System.out.println("Global Player created: " + player.getName());

@@ -28,7 +28,7 @@ public class JoinLeaveSync implements Listener {
         Player player = event.getPlayer();
         new GlobalPlayer(player.getUniqueId());
 
-        System.out.println(LP.getPrefix(event.getPlayer()));
+        // System.out.println(LP.getPrefix(event.getPlayer()));
 
     }
 

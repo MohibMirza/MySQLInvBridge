@@ -62,8 +62,8 @@ public class Title {
 
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitle(String color) { // color updates to whatever color is
+        return title.substring(0, 2) + color + title.charAt(2);
     }
 
     public void setTitle(String title) {

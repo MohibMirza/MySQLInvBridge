@@ -2,6 +2,7 @@ package com.kingfrozo.pd.sql;
 
 import com.kingfrozo.pd.Main;
 import com.kingfrozo.pd.inv.InventoryOps;
+import com.kingfrozo.pd.libs.LP;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -25,11 +26,15 @@ public class PlayerData {
         this.money = money;
         this.inv = inv;
 
-        if(!player.getName().equalsIgnoreCase(this.db_name)) {
+        if(!player.getName().equalsIgnoreCase(this.db_name)) { // TODO: MAKE THIS ASYNC PERHAPS!
             Main.plugin.data.setUsername(player, player.getName());
             db_name = player.getName();
             System.out.println(player.getName() + " has changed their username! Updating the db!");
         }
+
+        LP.setPrefix(player, title);
+
+
 
     }
 
