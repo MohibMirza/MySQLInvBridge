@@ -1,6 +1,7 @@
 package com.kingfrozo.pd.player;
 
 import com.kingfrozo.pd.Main;
+import net.luckperms.api.LuckPerms;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashMap;
@@ -52,6 +53,11 @@ public class Title {
 
             System.out.println(titles.get(titleName).toString());
         }
+    }
+
+    public static void syncTitle(String playerName, String title_key) {
+        Title title = titles.get(title_key);
+
 
 
     }

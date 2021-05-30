@@ -3,6 +3,7 @@ package com.kingfrozo.pd.events;
 import com.kingfrozo.pd.Main;
 import com.kingfrozo.pd.events.custom.PlayerSuccessfullyJoinedEvent;
 import com.kingfrozo.pd.inv.InventoryOps;
+import com.kingfrozo.pd.libs.LP;
 import com.kingfrozo.pd.player.GlobalPlayer;
 import com.kingfrozo.pd.sql.MySQL;
 import com.kingfrozo.pd.sql.SQLGetter;
@@ -26,6 +27,8 @@ public class JoinLeaveSync implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         new GlobalPlayer(player.getUniqueId());
+
+        System.out.println(LP.getPrefix(event.getPlayer()));
 
     }
 
